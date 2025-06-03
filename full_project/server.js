@@ -1,22 +1,29 @@
+require("dotenv").config(); // Load environment variables
+
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
-const User = require("./User");
+const User = require("./User"); // Make sure this file exists and exports a Mongoose model
 
 const app = express();
+const PORT = process.env.PORT;
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// MongoDB connection
 mongoose
-  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/userDB")
+  .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("Connected to MongoDB");
+    console.log("✅ Connected to MongoDB Atlas");
   })
   .catch((err) => {
-    console.error("Error connecting to MongoDB", err);
+    console.error("❌ Error connecting to MongoDB:", err.message);
   });
 
+// Routes
 app.get("/api/users", async (req, res) => {
   try {
     const users = await User.find();
@@ -24,7 +31,7 @@ app.get("/api/users", async (req, res) => {
       .status(200)
       .json({ message: "Users fetched successfully", data: users });
   } catch (err) {
-    res.status(500).json({ error: err });
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -36,10 +43,11 @@ app.post("/api/users", async (req, res) => {
       .status(201)
       .json({ message: "User created successfully", data: result });
   } catch (err) {
-    res.status(500).json({ error: err });
+    res.status(500).json({ error: err.message });
   }
 });
 
-app.listen(5000, () => {
-  console.log("Server listening on port 5000");
+// Start server
+app.listen(PORT, () => {
+  console.log(`🚀 Server listening on port ${PORT}`);
 });
