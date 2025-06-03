@@ -6,7 +6,9 @@ const PORT = process.env.PORT || 5000;
 // GET all users
 app.get("/users", async (req, res) => {
   try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/users");
+    const response = await fetch(
+      "https://jsonplaceholder.typicode.com/users?_limit=30"
+    );
     const data = await response.json();
     res.json(data);
   } catch (error) {
