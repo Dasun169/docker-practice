@@ -120,7 +120,7 @@ ADD . .
 RUN npm install
 CMD ["node", "index.js"]
 ```
-# Build & Run:
+### Build & Run:
 ```bash
 docker build -t simple-app .
 docker run --rm simple-app
@@ -188,7 +188,7 @@ docker-compose up -d
 
 ## ✅ Summary
 Docker helps avoid the "it works on my machine" problem by packaging your app and environment together. It's fast, consistent, and scalable.
-# 💡 Next Steps
+### 💡 Next Steps
 - Try building and running your own Dockerfile.
 - Explore Docker Compose with databases.
 - Push your image to DockerHub and share it with friends or teams.
